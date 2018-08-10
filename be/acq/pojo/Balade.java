@@ -1,8 +1,10 @@
 package be.acq.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Balade {
+public class Balade implements Serializable {
+	private static final long serialVersionUID = -2663266308936877512L;
 	private String idBalade;
 	private String localite;
 	private String CP;

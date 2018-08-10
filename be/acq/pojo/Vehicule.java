@@ -1,6 +1,8 @@
 package be.acq.pojo;
+import java.io.Serializable;
 
-public class Vehicule {
+public class Vehicule implements Serializable{
+	private static final long serialVersionUID = -3837083086725031272L;
 	private String idVehicule;
 	private int nbrPlaceMax;
 	private int nbrPlaceActuel;

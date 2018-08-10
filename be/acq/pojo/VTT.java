@@ -1,6 +1,7 @@
 package be.acq.pojo;
 
 public class VTT extends Categorie{
+	private static final long serialVersionUID = 959352147911027482L;
 	private String idVTT;
 	private String typeAmortisseur;
 	

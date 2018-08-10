@@ -1,8 +1,9 @@
 package be.acq.pojo;
-
+import java.io.Serializable;
 import java.util.Date;
 
-public class Personne {
+public class Personne implements Serializable {
+	private static final long serialVersionUID = 1072609382965770964L;
 	//Attributs
 	private String idPersonne;
 	private String nom;

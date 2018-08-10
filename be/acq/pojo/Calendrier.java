@@ -1,6 +1,9 @@
 package be.acq.pojo;
 
-public class Calendrier {
+import java.io.Serializable;
+
+public class Calendrier implements Serializable {
+	private static final long serialVersionUID = 956401323849234267L;
 	private String idCalendrier;
 
 	public String getIdCalendrier() {

@@ -1,6 +1,9 @@
 package be.acq.pojo;
 
-public class Categorie {
+import java.io.Serializable;
+
+public class Categorie implements Serializable{
+	private static final long serialVersionUID = -2791452639944428954L;
 	private String idCategorie;
 	private String nom;
 	private String taille;
