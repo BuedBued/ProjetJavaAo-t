@@ -1,6 +1,7 @@
 package be.acq.pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Balade implements Serializable {
@@ -11,6 +12,7 @@ public class Balade implements Serializable {
 	private String rue;
 	private String num;
 	private Date date;
+	private ArrayList<Vehicule> listCovoiturage;
 	
 	public String getIdBalade() { 
 		return idBalade;
@@ -48,5 +50,16 @@ public class Balade implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+	public ArrayList<Vehicule> getListCovoiturage() {
+		return listCovoiturage;
+	}
+	public void setListCovoiturage(ArrayList<Vehicule> listCovoiturage) {
+		this.listCovoiturage = listCovoiturage;
+	}
+	public boolean addCovoiturage(Vehicule v) {
+		return listCovoiturage.add(v);
+	}
+	public boolean removeCovoiturage(Vehicule v) {
+		return listCovoiturage.remove(v);
+	}
 }

@@ -2,16 +2,9 @@ package be.acq.pojo;
 
 public class Randonneur extends VTT {
 	private static final long serialVersionUID = -5620715460716844169L;
-	private String idRandonneur;
 	private double taillePetitPignon;
 	private double tailleGrandPignon;
 	
-	public String getIdRandonneur() {
-		return idRandonneur;
-	}
-	public void setIdRandonneur(String idRandonneur) {
-		this.idRandonneur = idRandonneur;
-	}
 	public double getTaillePetitPignon() {
 		return taillePetitPignon;
 	}
