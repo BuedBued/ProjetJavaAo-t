@@ -1,16 +1,29 @@
 package be.acq.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Membre extends Personne {
 	private static final long serialVersionUID = 1186729938582031733L;
-	private String idMembre;
+	private int idMembre;
 	private double solde;
 	private ArrayList<Categorie> listCategorie;
-	public String getIdMembre() {
+	
+	public Membre() {
+		super();
+	}
+	public Membre(String nom, String prenom, Date naissance, String tel, String mail, String mdp) {
+		super(nom, prenom, naissance, tel, mail, mdp);
+	}
+	public Membre(String nom, String prenom, Date naissance, String tel, String mail, String mdp, double solde) {
+		this(nom, prenom, naissance, tel, mail, mdp);
+		setSolde(solde);
+	}
+	
+	public int getIDMembre() {
 		return idMembre;
 	}
-	public void setIdMembre(String idMembre) {
+	public void setIDMembre(int idMembre) {
 		this.idMembre = idMembre;
 	}
 	public double getSolde() {

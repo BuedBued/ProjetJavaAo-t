@@ -5,6 +5,19 @@ public class Randonneur extends VTT {
 	private double taillePetitPignon;
 	private double tailleGrandPignon;
 	
+	public Randonneur() {
+		super();
+	}
+	public Randonneur(double taille, int nbrVitesse, String typeAmortisseur) {
+		super(taille, nbrVitesse, typeAmortisseur);
+	}
+	public Randonneur(double taille, int nbrVitesse, String typeAmortisseur, double taillePetitPignon, 
+			double tailleGrandPignon) {
+		this(taille, nbrVitesse, typeAmortisseur);
+		setTaillePetitPignon(taillePetitPignon);
+		setTailleGrandPignon(tailleGrandPignon);
+	}
+	
 	public double getTaillePetitPignon() {
 		return taillePetitPignon;
 	}

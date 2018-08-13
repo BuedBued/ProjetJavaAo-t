@@ -2,17 +2,25 @@ package be.acq.pojo;
 
 import java.io.Serializable;
 
-public class Categorie implements Serializable{
+public abstract class Categorie implements Serializable{
 	private static final long serialVersionUID = -2791452639944428954L;
-	private String idCategorie;
+	private int idCategorie;
 	private String libelle;
-	private String taille;
-	private String nbrVitesse;
+	private double taille;
+	private int nbrVitesse;
+	private Calendrier calendrier;
 	
-	public String getIdCategorie() {
+	//Constructeurs
+	public Categorie() {}
+	public Categorie(double taille, int nbrVitesse) {
+		setTaille(taille);
+		setNbrVitesse(nbrVitesse);
+	}
+	
+	public int getIDCategorie() {
 		return idCategorie;
 	}
-	public void setIdCategorie(String idCategorie) {
+	public void setIDCategorie(int idCategorie) {
 		this.idCategorie = idCategorie;
 	}
 	public String getLibelle() {
@@ -21,16 +29,22 @@ public class Categorie implements Serializable{
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	public String getTaille() {
+	public double getTaille() {
 		return taille;
 	}
-	public void setTaille(String taille) {
+	public void setTaille(double taille) {
 		this.taille = taille;
 	}
-	public String getNbrVitesse() {
+	public int getNbrVitesse() {
 		return nbrVitesse;
 	}
-	public void setNbrVitesse(String nbrVitesse) {
+	public void setNbrVitesse(int nbrVitesse) {
 		this.nbrVitesse = nbrVitesse;
+	}
+	public Calendrier getCalendrier() {
+		return calendrier;
+	}
+	public void setCalendrier(Calendrier calendrier) {
+		this.calendrier = calendrier;
 	}
 }

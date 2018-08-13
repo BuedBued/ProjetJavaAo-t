@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Calendrier implements Serializable {
 	private static final long serialVersionUID = 956401323849234267L; //[DEBUG] Nécessaire? 
 	private String idCalendrier;
+	private Categorie categorie;
 	private ArrayList<Balade> listBalade;
 	public String getIdCalendrier() {
 		return idCalendrier;
@@ -24,5 +25,11 @@ public class Calendrier implements Serializable {
 	}
 	public boolean removeBalade(Balade b) {
 		return listBalade.remove(b);
+	}
+	public Categorie getCategorie() {
+		return categorie;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 }

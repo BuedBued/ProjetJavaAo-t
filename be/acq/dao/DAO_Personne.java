@@ -99,7 +99,8 @@ public class DAO_Personne extends DAO<Personne> {
 		return p;
 	}
 
-	@Override
+	//Select complémentaire pour récupérer une personne si on ne connait pas son ID (par exemple à la connexion
+	//au programme)
 	public Personne select(Personne obj) {
 		Personne p = null;
 		PreparedStatement stmt = null;

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Balade implements Serializable {
 	private static final long serialVersionUID = -2663266308936877512L;
-	private String idBalade;
+	private int idBalade;
 	private String localite;
 	private String CP;
 	private String rue;
@@ -14,10 +14,19 @@ public class Balade implements Serializable {
 	private Date date;
 	private ArrayList<Vehicule> listCovoiturage;
 	
-	public String getIdBalade() { 
+	public Balade() {}
+	public Balade(String localite, String CP, String rue, String num, Date date) {
+		setLocalite(localite);
+		setCP(CP);
+		setRue(rue);
+		setNum(num);
+		setDate(date);
+	}
+	
+	public int getIDBalade() { 
 		return idBalade;
 	}
-	public void setIdBalade(String idBalade) {
+	public void setIDBalade(int idBalade) {
 		this.idBalade = idBalade;
 	}
 	public String getLocalite() {
