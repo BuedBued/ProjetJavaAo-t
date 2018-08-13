@@ -69,12 +69,13 @@ public class DAO_Balade extends DAO<Balade> {
 		try {
 			//Preparation de la commande SQL
 			stmt = connect.prepareStatement("UPDATE Responsable SET dateBalade = ?, rueBalade = ?, localiteBalade = ?, "
-					+ "numBalade = ?, cpBalade = ?,");
+					+ "numBalade = ?, cpBalade = ? WHERE idBalade = ?");
 			stmt.setDate(1, (Date)obj.getDate());
 			stmt.setString(2, obj.getRue());
 			stmt.setString(3, obj.getLocalite());
 			stmt.setString(4, obj.getNum());
 			stmt.setString(5, obj.getCP());
+			stmt.setInt(6, obj.getIDBalade());
 			//Execution de la commande SQL
 			stmt.executeUpdate();
 			b = true;

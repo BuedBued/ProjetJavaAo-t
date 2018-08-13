@@ -60,7 +60,7 @@ public class DAO_Tresorier extends DAO<Tresorier> {
 		PreparedStatement stmt = null;
 		ResultSet res = null;
 		try{
-			stmt = connect.prepareStatement("SELECT * FROM Responsable WHERE idResponsable = ?",
+			stmt = connect.prepareStatement("SELECT * FROM Tresorier WHERE idTresorier = ?",
 					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			stmt.setInt(1, id);
 			res = stmt.executeQuery();
