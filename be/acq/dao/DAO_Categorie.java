@@ -1,6 +1,10 @@
 package be.acq.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import be.acq.pojo.*;
 
@@ -26,7 +30,64 @@ public class DAO_Categorie extends DAO<Categorie> {
 	}
 
 	@Override
-	public Categorie select(int id) { //[DEBUG] Non utilisé [Je crois]
-		return null;
+	public Categorie select(int id) {
+		Categorie c = null;
+		switch(id) {
+		case 1:
+			DAO_Cyclo daoC = new DAO_Cyclo(DBConnection.getInstance());
+			c = daoC.select(1);
+			break;
+		case 2:
+			DAO_Randonneur daoR = new DAO_Randonneur(DBConnection.getInstance());
+			c = daoR.select(2);
+			break;
+		case 3:
+			DAO_Trialiste daoT = new DAO_Trialiste(DBConnection.getInstance());
+			c = daoT.select(3);
+			break;
+		case 4:
+			DAO_Descendeur daoD = new DAO_Descendeur(DBConnection.getInstance());
+			c = daoD.select(4);
+			break;
+		}
+		return c;
+	}
+	
+	public ArrayList<Categorie> selectAllCategories(int idMembre){
+		ArrayList<Categorie> listCat = new ArrayList<Categorie>();
+		PreparedStatement stmt = null;
+		ResultSet res = null;
+		try{
+			stmt = connect.prepareStatement("SELECT * FROM LigneCategorie WHERE idMembre = ?",
+					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			stmt.setInt(1, idMembre);
+			res = stmt.executeQuery();
+			while(res.next()) {
+				Categorie c = null;
+				switch(res.getInt("idCategorie")) {
+				case 1:
+					DAO_Cyclo daoC = new DAO_Cyclo(DBConnection.getInstance());
+					c = daoC.select(1);
+					break;
+				case 2:
+					DAO_Randonneur daoR = new DAO_Randonneur(DBConnection.getInstance());
+					c = daoR.select(2);
+					break;
+				case 3:
+					DAO_Trialiste daoT = new DAO_Trialiste(DBConnection.getInstance());
+					c = daoT.select(3);
+					break;
+				case 4:
+					DAO_Descendeur daoD = new DAO_Descendeur(DBConnection.getInstance());
+					c = daoD.select(4);
+					break;
+				}
+				listCat.add(c);
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return listCat;
 	}
 }

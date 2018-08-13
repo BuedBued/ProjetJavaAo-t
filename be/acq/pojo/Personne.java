@@ -1,6 +1,5 @@
 package be.acq.pojo;
 import java.io.Serializable;
-import java.util.Date;
 
 public class Personne implements Serializable {
 	private static final long serialVersionUID = 1072609382965770964L;
@@ -8,17 +7,15 @@ public class Personne implements Serializable {
 	private int idPersonne;
 	private String nom;
 	private String prenom;
-	private Date dateNaissance;
 	private String tel;
 	private String mail;
 	private String mdp;
 	
 	//Constructeurs
 	public Personne() {}
-	public Personne(String nom, String prenom, Date naissance, String tel, String mail, String mdp) {
+	public Personne(String nom, String prenom, String tel, String mail, String mdp) {
 		setNom(nom);
 		setPrenom(prenom);
-		setDateNaissance(naissance);
 		setTel(tel);
 		setMail(mail);
 		setMdp(mdp);
@@ -42,12 +39,6 @@ public class Personne implements Serializable {
 	}
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
-	}
-	public Date getDateNaissance() {
-		return dateNaissance;
-	}
-	public void setDateNaissance(Date dateNaissance) {
-		this.dateNaissance = dateNaissance;
 	}
 	public String getTel() {
 		return tel;

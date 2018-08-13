@@ -1,6 +1,5 @@
 package be.acq.pojo;
 
-import java.util.Date;
 
 public class Responsable extends Personne{
 	private static final long serialVersionUID = -1913995540909085053L;
@@ -11,11 +10,11 @@ public class Responsable extends Personne{
 	public Responsable() {
 		super();
 	}
-	public Responsable(String nom, String prenom, Date naissance, String tel, String mail, String mdp) {
-		super(nom, prenom, naissance, tel, mail, mdp);
+	public Responsable(String nom, String prenom, String tel, String mail, String mdp) {
+		super(nom, prenom, tel, mail, mdp);
 	}
-	public Responsable(String nom, String prenom, Date naissance, String tel, String mail, String mdp, Categorie cat) {
-		this(nom,prenom,naissance,tel,mail,mdp);
+	public Responsable(String nom, String prenom, String tel, String mail, String mdp, Categorie cat) {
+		this(nom,prenom,tel,mail,mdp);
 		setCategorie(cat);
 	}
 

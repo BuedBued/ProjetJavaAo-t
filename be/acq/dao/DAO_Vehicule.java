@@ -85,8 +85,8 @@ public class DAO_Vehicule extends DAO<Vehicule> {
 			res = stmt.executeQuery();
 			if(res.first()){
 				Membre m = new Membre(res.getString("nomPersonne"), res.getString("prenomPersonne"), 
-						res.getDate("dateNaissancePersonne"), res.getString("telephonePersonne"), 
-						res.getString("mailPersonne"), res.getString("mdpPersonne"), res.getDouble("solde"));
+						res.getString("telephonePersonne"), res.getString("mailPersonne"), 
+						res.getString("mdpPersonne"), res.getDouble("solde"));
 				m.setIDMembre(res.getInt("idMembre"));
 				v = new Vehicule(res.getInt("maxPlace"),m);
 				

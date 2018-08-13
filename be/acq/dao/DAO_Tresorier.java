@@ -17,12 +17,17 @@ public class DAO_Tresorier extends DAO<Tresorier> {
 	public boolean create(Tresorier obj) {
 		boolean b = false;
 		PreparedStatement stmt = null;
+		ResultSet res = null;
 		try {
 			stmt = connect.prepareStatement("INSERT INTO Tresorier (idPersonne) VALUES (?)");
 			stmt.setInt(1, obj.getIDPersonne());
 			//Execution de la commande SQL
 			stmt.executeUpdate();
-			b = true;
+			res = stmt.getGeneratedKeys();
+			if(res.next()) {
+				obj.setIDTresorier(res.getInt(1));
+				b = true;
+			}
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -60,13 +65,14 @@ public class DAO_Tresorier extends DAO<Tresorier> {
 		PreparedStatement stmt = null;
 		ResultSet res = null;
 		try{
-			stmt = connect.prepareStatement("SELECT * FROM Tresorier WHERE idTresorier = ?",
+			stmt = connect.prepareStatement("SELECT * FROM Tresorier WHERE idPersonne = ?",
 					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			stmt.setInt(1, id);
 			res = stmt.executeQuery();
 			if(res.first()){
 				t = new Tresorier();
-				t.setIDTresorier(id);
+				t.setIDPersonne(id);
+				t.setIDTresorier(res.getInt("idTresorier"));
 			}
 		}
 		catch(SQLException e){

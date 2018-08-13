@@ -1,7 +1,6 @@
 package be.acq.pojo;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Membre extends Personne {
 	private static final long serialVersionUID = 1186729938582031733L;
@@ -12,11 +11,11 @@ public class Membre extends Personne {
 	public Membre() {
 		super();
 	}
-	public Membre(String nom, String prenom, Date naissance, String tel, String mail, String mdp) {
-		super(nom, prenom, naissance, tel, mail, mdp);
+	public Membre(String nom, String prenom, String tel, String mail, String mdp) {
+		super(nom, prenom, tel, mail, mdp);
 	}
-	public Membre(String nom, String prenom, Date naissance, String tel, String mail, String mdp, double solde) {
-		this(nom, prenom, naissance, tel, mail, mdp);
+	public Membre(String nom, String prenom, String tel, String mail, String mdp, double solde) {
+		this(nom, prenom, tel, mail, mdp);
 		setSolde(solde);
 	}
 	
