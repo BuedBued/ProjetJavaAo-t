@@ -8,26 +8,39 @@ import be.acq.dao.*;
 public class M_Personne {
 	
 	public static void main(String[] args) {
-		System.out.println("**PROGRAMME DE COVOITURAGE**");
-		System.out.println("1. Connexion");
-		System.out.println("2. Inscription");
-		System.out.print("Votre choix : ");
-		int choix = Clavier.lireInt();
-		while(choix !=1 && choix !=2) {
-			System.out.println("Choix non valide");
+		M_Personne mP = new M_Personne();
+		mP.start();
+	}
+	public void start() {
+		int choix;
+		do {
+			System.out.println("**PROGRAMME DE COVOITURAGE**");
+			System.out.println("1. Connexion");
+			System.out.println("2. Inscription");
+			System.out.println("0. Quitter");
 			System.out.print("Votre choix : ");
 			choix = Clavier.lireInt();
+			while(choix <0 || choix >2) {
+				System.out.println("Choix non valide");
+				System.out.print("Votre choix : ");
+				choix = Clavier.lireInt();
+			}
+			M_Personne p = new M_Personne();
+			switch(choix) {
+			case 1:
+				p.connexion();
+				break;
+			case 2:
+				p.inscription();
+				break;
+			case 0:
+				p.conclusion();
+			}
 		}
-		M_Personne p = new M_Personne();
-		switch(choix) {
-		case 1:
-			p.connexion();
-			break;
-		case 2:
-			p.inscription();
-			break;
-		}
+		while(choix!=0);
 	}
+	
+	//Méthode de connexion
 	public void connexion() {
 		System.out.println("**CONNEXION**");
 		System.out.print("Mail : ");
@@ -38,12 +51,14 @@ public class M_Personne {
 		Object p = daoP.select(mail, mdp);
 		if(p!=null) {
 			if(p.getClass().equals(Membre.class)) {
-				//Action Membre
-				System.out.println("Debug Membre");
+				Membre m = (Membre)p;
+				M_Membre mM = new M_Membre(m);
+				mM.menuMembre();
 			}
 			else if(p.getClass().equals(Responsable.class)) {
-				//Action Responsable
-				System.out.println("Debug Responsable");
+				Responsable r = (Responsable)p;
+				M_Responsable mR = new M_Responsable(r);
+				mR.menuResponsable();
 			}
 			else if(p.getClass().equals(Tresorier.class)) {
 				//Action Tresorier
@@ -56,6 +71,8 @@ public class M_Personne {
 			System.out.println("Connexion echouee");
 		}
 	}
+	
+	//Méthode d'inscription (pour uniquement les membres)
 	public void inscription() {
 		Membre m = encodage();
 		if(m!=null) {
@@ -64,7 +81,8 @@ public class M_Personne {
 			m.setSolde(20);
 			DAO_Membre daoM = new DAO_Membre(DBConnection.getInstance());
 			if(daoM.create(m)) {
-				//Partie Membre
+				M_Membre mM = new M_Membre(m);
+				mM.menuMembre();
 			}
 			else {
 				System.out.println("Votre inscription a echouee");
@@ -74,6 +92,7 @@ public class M_Personne {
 			System.out.println("Une erreur est survenue, veillez ressayer");
 		}
 	}
+	
 	//Méthode d'encodage des informations de la personne
 	public Membre encodage() {
 		DAO_Personne daoP = new DAO_Personne(DBConnection.getInstance());
@@ -121,6 +140,7 @@ public class M_Personne {
 		}
 		return m;
 	}
+	
 	//Choix de la catégorie pour les Responsables et les membres (à l'inscription)
 	public Categorie choixCategorie() {
 		Categorie c = null;
@@ -155,5 +175,9 @@ public class M_Personne {
 			break;
 		}
 		return c;
+	}
+	
+	public void conclusion() {
+		System.out.println("**FERMETURE DU PROGRAMME**");
 	}
 }

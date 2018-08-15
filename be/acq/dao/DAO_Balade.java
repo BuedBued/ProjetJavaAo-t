@@ -1,7 +1,6 @@
 package be.acq.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import be.acq.pojo.Balade;
 import be.acq.pojo.Calendrier;
 import be.acq.pojo.Categorie;
+import be.acq.pojo.Membre;
 
 
 public class DAO_Balade extends DAO<Balade> {
@@ -25,16 +25,39 @@ public class DAO_Balade extends DAO<Balade> {
 	public boolean create(Balade obj, int idCategorie) {
 		boolean b = false;
 		PreparedStatement stmt = null;
+		ResultSet res = null;
 		try {
 			stmt = connect.prepareStatement("INSERT INTO Balade (dateBalade, rueBalade, localiteBalade, numBalade,"
-					+ "cpBalade, idCategorie) VALUES (?,?,?,?,?,?)");
-			stmt.setDate(1, (Date)obj.getDate());
+					+ "cpBalade, forfait, idCategorie) VALUES (?,?,?,?,?,?,?)");
+			stmt.setString(1, obj.getDate());
 			stmt.setString(2, obj.getRue());
 			stmt.setString(3, obj.getLocalite());
 			stmt.setString(4, obj.getNum());
 			stmt.setString(5, obj.getCP());
-			stmt.setInt(6, idCategorie);
+			stmt.setDouble(6, obj.getForfait());
+			stmt.setInt(7, idCategorie);
 			//Execution de la commande SQL
+			stmt.executeUpdate();
+			res = stmt.getGeneratedKeys();
+			if(res.next()) {
+				obj.setIDBalade(res.getInt(1));
+				b = true;
+			}
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public boolean createCovoiturage(int id, Membre m, int maxPlace) {
+		boolean b = false;
+		PreparedStatement stmt = null;
+		try {
+			stmt = connect.prepareStatement("INSERT INTO Covoiturage (idBalade, idConducteur, maxPlace) VALUES (?,?,?)");
+			stmt.setInt(1, id);
+			stmt.setInt(2, m.getIDMembre());
+			stmt.setInt(3, maxPlace);
 			stmt.executeUpdate();
 			b = true;
 		}
@@ -69,13 +92,14 @@ public class DAO_Balade extends DAO<Balade> {
 		try {
 			//Preparation de la commande SQL
 			stmt = connect.prepareStatement("UPDATE Responsable SET dateBalade = ?, rueBalade = ?, localiteBalade = ?, "
-					+ "numBalade = ?, cpBalade = ? WHERE idBalade = ?");
-			stmt.setDate(1, (Date)obj.getDate());
+					+ "numBalade = ?, cpBalade = ?, forfait = ? WHERE idBalade = ?");
+			stmt.setString(1, obj.getDate());
 			stmt.setString(2, obj.getRue());
 			stmt.setString(3, obj.getLocalite());
 			stmt.setString(4, obj.getNum());
 			stmt.setString(5, obj.getCP());
-			stmt.setInt(6, obj.getIDBalade());
+			stmt.setDouble(6, obj.getForfait());
+			stmt.setInt(7, obj.getIDBalade());
 			//Execution de la commande SQL
 			stmt.executeUpdate();
 			b = true;
@@ -98,7 +122,7 @@ public class DAO_Balade extends DAO<Balade> {
 			res = stmt.executeQuery();
 			if(res.first()){
 				b = new Balade(res.getString("localiteBalade"), res.getString("cpBalade"),res.getString("rueBalade"), 
-						res.getString("numBalade"), res.getDate("dateBalade"));
+						res.getString("numBalade"), res.getString("dateBalade"), res.getDouble("forfait"));
 				b.setIDBalade(id);
 			}
 		}
@@ -122,7 +146,7 @@ public class DAO_Balade extends DAO<Balade> {
 			res = stmt.executeQuery();
 			while(res.next()){
 				b = new Balade(res.getString("localiteBalade"), res.getString("cpBalade"),res.getString("rueBalade"), 
-						res.getString("numBalade"), res.getDate("dateBalade"));
+						res.getString("numBalade"), res.getString("dateBalade"), res.getDouble("forfait"));
 				b.setIDBalade(res.getInt("idBalade"));
 				listBalade.add(b);
 			}

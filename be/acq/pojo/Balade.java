@@ -2,7 +2,6 @@ package be.acq.pojo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Balade implements Serializable {
 	private static final long serialVersionUID = -2663266308936877512L;
@@ -11,16 +10,18 @@ public class Balade implements Serializable {
 	private String CP;
 	private String rue;
 	private String num;
-	private Date date;
+	private String date;
+	private double forfait;
 	private ArrayList<Vehicule> listCovoiturage;
 	
 	public Balade() {}
-	public Balade(String localite, String CP, String rue, String num, Date date) {
+	public Balade(String localite, String CP, String rue, String num, String date, double forfait) {
 		setLocalite(localite);
 		setCP(CP);
 		setRue(rue);
 		setNum(num);
 		setDate(date);
+		setForfait(forfait);
 	}
 	
 	public int getIDBalade() { 
@@ -53,10 +54,10 @@ public class Balade implements Serializable {
 	public void setRue(String rue) {
 		this.rue = rue;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public ArrayList<Vehicule> getListCovoiturage() {
@@ -70,5 +71,15 @@ public class Balade implements Serializable {
 	}
 	public boolean removeCovoiturage(Vehicule v) {
 		return listCovoiturage.remove(v);
+	}
+	public double getForfait() {
+		return forfait;
+	}
+	public void setForfait(double forfait) {
+		this.forfait = forfait;
+	}
+	
+	public String display() {
+		return date + " " + rue + " " + num + " " + CP + " " + localite;
 	}
 }
