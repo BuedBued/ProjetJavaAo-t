@@ -15,6 +15,7 @@ public class M_Responsable {
 	public void menuResponsable() {
 		int choix;
 		do {
+			System.out.println();
 			System.out.println("**MENU RESPONSABLE**");
 			System.out.println("1. Ajouter une balade");
 			System.out.println("0. Quitter");
@@ -41,6 +42,7 @@ public class M_Responsable {
 	}
 	
 	public boolean createBalade() {
+		System.out.println();
 		boolean res = false;
 		System.out.println("**AJOUT D'UNE BALADE**");
 		System.out.print("Date de la balade : ");

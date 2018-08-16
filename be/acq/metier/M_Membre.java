@@ -27,6 +27,7 @@ public class M_Membre {
 	public void menuMembre() {
 		int choix;
 		do {
+			System.out.println();
 			System.out.println("**MENU MEMBRE**");
 			System.out.println("1. Proposer ses disponibilités");
 			System.out.println("2. Réserver une place");
@@ -63,6 +64,7 @@ public class M_Membre {
 	
 	//CHOIX 1 : PROPOSER UNE DISPONIBILITE
 	public void proposerDisponibilite() {
+		System.out.println();
 		System.out.println("**PROPOSER DISPONIBILITE**");
 		Categorie c = choisirCategorie();
 		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
@@ -92,6 +94,7 @@ public class M_Membre {
 	
 	//CHOIX 2 : RESERVER UNE PLACE
 	public void reserverPlace() {
+		System.out.println();
 		System.out.println("**RESERVER UNE PLACE**");
 		Categorie c = choisirCategorie();
 		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
@@ -126,6 +129,7 @@ public class M_Membre {
 	
 	//CHOIX 3 : S'INSCRIRE A UNE NOUVELLE CATEGORIE
 	public void inscrireCategorie() {
+		System.out.println();
 		System.out.println("**INSCRIPTION A UNE NOUVELLE CATEGORIE**");
 		Categorie c = choixNouvelleCategorie(m);
 		if(c!=null) {
@@ -141,6 +145,7 @@ public class M_Membre {
 	
 	//CHOIX 4 : PAYEMENT
 	public void payement() {
+		System.out.println();
 		System.out.println("**PAYEMENT**");
 		System.out.println("Votre solde : " + m.getSolde());
 		System.out.println("Désirez-vous payer maintenant : ");
@@ -167,7 +172,7 @@ public class M_Membre {
 	public Categorie choixNouvelleCategorie(Membre m) {
 		ArrayList<Categorie> listCategorie = m.getListCategorie();
 		Categorie c = null;
-		System.out.println("**Choix de votre catégorie**");
+		System.out.println("Choix de votre catégorie");
 		System.out.println("1. Cyclo");
 		System.out.println("2. Randonneur");
 		System.out.println("3. Trialiste");

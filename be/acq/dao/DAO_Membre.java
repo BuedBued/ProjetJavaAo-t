@@ -111,7 +111,7 @@ public class DAO_Membre extends DAO<Membre>{
 			stmt = connect.prepareStatement("SELECT * FROM Membre m INNER JOIN Personne p ON m.idPersonne = p.idPersonne",
 					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			res = stmt.executeQuery();
-			if(res.next()){
+			while(res.next()){
 				Membre m = new Membre(res.getString("nomPersonne"),res.getString("prenomPersonne"), 
 						res.getString("telephonePersonne"),res.getString("mailPersonne"), 
 						res.getString("mdpPersonne"),res.getDouble("solde"));

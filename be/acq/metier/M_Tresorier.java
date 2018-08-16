@@ -17,6 +17,7 @@ public class M_Tresorier {
 	public void menuTresorier() {
 		int choix;
 		do {
+			System.out.println();
 			System.out.println("**MENU TRESORIER**");
 			System.out.println("1. Comptabilité");
 			System.out.println("0. Quitter");

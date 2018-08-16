@@ -14,6 +14,7 @@ public class M_Personne {
 	public void start() {
 		int choix;
 		do {
+			System.out.println();
 			System.out.println("**PROGRAMME DE COVOITURAGE**");
 			System.out.println("1. Connexion");
 			System.out.println("2. Inscription");
@@ -42,6 +43,7 @@ public class M_Personne {
 	
 	//Méthode de connexion
 	public void connexion() {
+		System.out.println();
 		System.out.println("**CONNEXION**");
 		System.out.print("Mail : ");
 		String mail = Clavier.lireString();
@@ -75,6 +77,8 @@ public class M_Personne {
 	
 	//Méthode d'inscription (pour uniquement les membres)
 	public void inscription() {
+		System.out.println();
+		System.out.println("**INSCRIPTION**");
 		Membre m = encodage();
 		if(m!=null) {
 			m.setListCategorie(new ArrayList<Categorie>());
@@ -144,6 +148,7 @@ public class M_Personne {
 	
 	//Choix de la catégorie pour les membres à l'inscription
 	public Categorie choixCategorie() {
+		System.out.println();
 		Categorie c = null;
 		System.out.println("**Choix de votre catégorie**");
 		System.out.println("1. Cyclo");
@@ -179,6 +184,7 @@ public class M_Personne {
 	}
 	
 	public void conclusion() {
+		System.out.println();
 		System.out.println("**FERMETURE DU PROGRAMME**");
 	}
 }
