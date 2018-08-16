@@ -18,6 +18,27 @@ public class DAO_Categorie extends DAO<Categorie> {
 	public boolean create(Categorie obj) { //Non utilisé
 		return false;
 	}
+	
+	public boolean ajouterCategorie(Categorie obj, Membre m) {
+		boolean b = false;
+		PreparedStatement stmt = null;
+		try {
+			stmt = connect.prepareStatement("INSERT INTO LigneCategorie (idCategorie,idMembre) VALUES (?,?)");
+			stmt.setInt(1, obj.getIDCategorie());
+			stmt.setInt(2, m.getIDMembre());
+			stmt.executeUpdate();
+			
+			//Ajout du supplément + mise en DB
+			m.setSolde(m.getSolde()+5);
+			DAO_Membre daoM = new DAO_Membre(DBConnection.getInstance());
+			if(daoM.update(m))
+				b = true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 	@Override
 	public boolean delete(Categorie obj) { //Non utilisé

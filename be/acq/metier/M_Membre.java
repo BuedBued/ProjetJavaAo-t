@@ -1,8 +1,15 @@
 package be.acq.metier;
 
+import java.util.ArrayList;
+
 import be.acq.clavier.Clavier;
 import be.acq.dao.DAO_Balade;
+import be.acq.dao.DAO_Categorie;
+import be.acq.dao.DAO_Cyclo;
+import be.acq.dao.DAO_Descendeur;
 import be.acq.dao.DAO_Membre;
+import be.acq.dao.DAO_Randonneur;
+import be.acq.dao.DAO_Trialiste;
 import be.acq.dao.DAO_Vehicule;
 import be.acq.dao.DBConnection;
 import be.acq.pojo.Balade;
@@ -41,6 +48,8 @@ public class M_Membre {
 			case 2:
 				reserverPlace();
 				break;
+			case 3:
+				inscrireCategorie();
 			case 0:
 				//Retour à la classe M_Personne
 				break;
@@ -112,9 +121,66 @@ public class M_Membre {
 		return etape1 && etape2;
 	}
 	
-	//CHOIX 3 : PAYER SON DU
+	//CHOIX 3 : S'INSCRIRE A UNE NOUVELLE CATEGORIE
+	public void inscrireCategorie() {
+		Categorie c = choixNouvelleCategorie(m);
+		if(c!=null) {
+			DAO_Categorie daoC = new DAO_Categorie(DBConnection.getInstance());
+			if(daoC.ajouterCategorie(c, m)) {
+				m.addCategorie(c);
+				System.out.println("Vous êtes bien inscrit à une nouvelle catégorie");
+			}
+		}
+		else 
+			System.out.println("Vous êtes déjà inscrit dans cette catégorie");
+	}
 	
 	//Méthodes des choix
+	public Categorie choixNouvelleCategorie(Membre m) {
+		ArrayList<Categorie> listCategorie = m.getListCategorie();
+		Categorie c = null;
+		System.out.println("**Choix de votre catégorie**");
+		System.out.println("1. Cyclo");
+		System.out.println("2. Randonneur");
+		System.out.println("3. Trialiste");
+		System.out.println("4. Descendeur");
+		System.out.print("Votre choix : ");
+		int choix = Clavier.lireInt();
+		while(choix<1 || choix>4) {
+			System.out.println("Choix non valide");
+			System.out.print("Votre choix : ");
+			choix = Clavier.lireInt();
+		}
+		boolean present = false;
+		for(Categorie cat : listCategorie) {
+			if(cat.getIDCategorie()==choix) {
+				present = true;
+				break;
+			}
+		}
+		if(!present) {
+			switch(choix) {
+			case 1:
+				DAO_Cyclo daoCyclo = new DAO_Cyclo(DBConnection.getInstance());
+				c = daoCyclo.select(choix);
+				break;
+			case 2:
+				DAO_Randonneur daoRand = new DAO_Randonneur(DBConnection.getInstance());
+				c = daoRand.select(choix);
+				break;
+			case 3:
+				DAO_Trialiste daoTrial = new DAO_Trialiste(DBConnection.getInstance());
+				c = daoTrial.select(choix);
+				break;
+			case 4:
+				DAO_Descendeur daoDesc = new DAO_Descendeur(DBConnection.getInstance());
+				c = daoDesc.select(choix);
+				break;
+			}
+		}
+		return c;
+	}
+	
 	public Categorie choisirCategorie() {
 		System.out.println("Choisissez la catégorie");
 		int i = 1;

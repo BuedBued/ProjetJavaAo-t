@@ -141,7 +141,7 @@ public class M_Personne {
 		return m;
 	}
 	
-	//Choix de la catégorie pour les Responsables et les membres (à l'inscription)
+	//Choix de la catégorie pour les membres à l'inscription
 	public Categorie choixCategorie() {
 		Categorie c = null;
 		System.out.println("**Choix de votre catégorie**");
