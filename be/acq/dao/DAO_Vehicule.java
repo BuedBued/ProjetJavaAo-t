@@ -41,7 +41,7 @@ public class DAO_Vehicule extends DAO<Vehicule> {
 		boolean b = false;
 		PreparedStatement stmt = null;
 		try {
-			stmt = connect.prepareStatement("INSERT INTO ListPassager (idCovoiturage, idMembre) VALUES (?,?)");
+			stmt = connect.prepareStatement("INSERT INTO ListePassager (idCovoiturage, idMembre) VALUES (?,?)");
 			stmt.setInt(1, obj.getIDVehicule());
 			stmt.setInt(2, idPassager);
 			//Execution de la commande SQL
@@ -109,6 +109,7 @@ public class DAO_Vehicule extends DAO<Vehicule> {
 						res.getString("mdpPersonne"), res.getDouble("solde"));
 				m.setIDMembre(res.getInt("idMembre"));
 				v = new Vehicule(res.getInt("maxPlace"),m);
+				v.setIDVehicule(id);
 				v.setListPassager(daoV.selectListPassager(id));
 				v.setNbrPlaceActuel(v.getListPassager().size());
 			}
@@ -123,9 +124,9 @@ public class DAO_Vehicule extends DAO<Vehicule> {
 		PreparedStatement stmt = null;
 		ResultSet res = null;
 		try{
-			stmt = connect.prepareStatement("SELECT * FROM Covoiturage c INNER JOIN ListPassager l ON c.idCovoiturage = "
+			stmt = connect.prepareStatement("SELECT * FROM Covoiturage c INNER JOIN ListePassager l ON c.idCovoiturage = "
 					+ "l.idCovoiturage INNER JOIN Membre m ON m.idMembre = l.idMembre INNER JOIN Personne p ON "
-					+ "m.idPersonne = p.idPersonne WHERE idCovoiturage = ?",
+					+ "m.idPersonne = p.idPersonne WHERE c.idCovoiturage = ?",
 					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			stmt.setInt(1, id);
 			res = stmt.executeQuery();

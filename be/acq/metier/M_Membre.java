@@ -170,10 +170,10 @@ public class M_Membre {
 				choix = Clavier.lireInt();
 			}
 			v = b.getListCovoiturage().get(choix-1);
-			if(v.getNbrPlaceActuel()==0)
+			if(v.getNbrPlaceActuel()==v.getNbrPlaceMax())
 				System.out.println("Il n'y a plus de place pour ce covoiturage-ci. Veuillez en choisir un nouveau");
 		}
-		while(v.getNbrPlaceActuel()==0);
+		while(v.getNbrPlaceActuel()==v.getNbrPlaceMax());
 		return v;
 	}
 }
