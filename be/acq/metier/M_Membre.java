@@ -36,7 +36,7 @@ public class M_Membre {
 			System.out.println("0. Quitter");
 			System.out.print("Votre choix : ");
 			choix = Clavier.lireInt();
-			while(choix<0 || choix >2) {
+			while(choix<0 || choix >4) {
 				System.out.println("Choix non valide");
 				System.out.print("Votre choix : ");
 				choix = Clavier.lireInt();
@@ -50,6 +50,10 @@ public class M_Membre {
 				break;
 			case 3:
 				inscrireCategorie();
+				break;
+			case 4:
+				payement();
+				break;
 			case 0:
 				//Retour à la classe M_Personne
 				break;
@@ -123,6 +127,7 @@ public class M_Membre {
 	
 	//CHOIX 3 : S'INSCRIRE A UNE NOUVELLE CATEGORIE
 	public void inscrireCategorie() {
+		System.out.println("**INSCRIPTION A UNE NOUVELLE CATEGORIE**");
 		Categorie c = choixNouvelleCategorie(m);
 		if(c!=null) {
 			DAO_Categorie daoC = new DAO_Categorie(DBConnection.getInstance());
@@ -133,6 +138,30 @@ public class M_Membre {
 		}
 		else 
 			System.out.println("Vous êtes déjà inscrit dans cette catégorie");
+	}
+	
+	//CHOIX 4 : PAYEMENT
+	public void payement() {
+		System.out.println("**PAYEMENT**");
+		System.out.println("Votre solde : " + m.getSolde());
+		System.out.println("Désirez-vous payer maintenant : ");
+		System.out.println("1. OUI");
+		System.out.println("2. NON");
+		System.out.print("Votre choix : ");
+		int choix = Clavier.lireInt();
+		while(choix<1 || choix >2) {
+			System.out.println("Choix non valide");
+			System.out.print("Votre choix : ");
+			choix = Clavier.lireInt();
+		}
+		if(choix==1) {
+			m.setSolde(0);
+			DAO_Membre daoM = new DAO_Membre(DBConnection.getInstance());
+			if(daoM.update(m))
+				System.out.println("Votre payement a été effectué avec succès");
+			else
+				System.out.println("Une erreur est survenue lors du payement");
+		}
 	}
 	
 	//Méthodes des choix
