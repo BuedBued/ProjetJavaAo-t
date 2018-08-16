@@ -61,8 +61,9 @@ public class M_Personne {
 				mR.menuResponsable();
 			}
 			else if(p.getClass().equals(Tresorier.class)) {
-				//Action Tresorier
-				System.out.println("Debug Trésorier");
+				Tresorier t = (Tresorier)p;
+				M_Tresorier mT = new M_Tresorier(t);
+				mT.menuTresorier();
 			}
 			else
 				System.out.println("Connexion échouée");

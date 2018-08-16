@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import be.acq.pojo.Membre;
 
 public class DAO_Membre extends DAO<Membre>{
@@ -99,6 +101,29 @@ public class DAO_Membre extends DAO<Membre>{
 			e.printStackTrace();
 		}
 		return m;
+	}
+	
+	public ArrayList<Membre> selectAll(){
+		ArrayList<Membre> listMembre = new ArrayList<Membre>();
+		PreparedStatement stmt = null;
+		ResultSet res = null;
+		try{
+			stmt = connect.prepareStatement("SELECT * FROM Membre m INNER JOIN Personne p ON m.idPersonne = p.idPersonne",
+					ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			res = stmt.executeQuery();
+			if(res.next()){
+				Membre m = new Membre(res.getString("nomPersonne"),res.getString("prenomPersonne"), 
+						res.getString("telephonePersonne"),res.getString("mailPersonne"), 
+						res.getString("mdpPersonne"),res.getDouble("solde"));
+				m.setIDMembre(res.getInt("idMembre"));
+				m.setIDPersonne(res.getInt("idPersonne"));
+				listMembre.add(m);
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return listMembre;
 	}
 
 }

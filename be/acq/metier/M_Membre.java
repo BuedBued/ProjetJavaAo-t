@@ -19,7 +19,7 @@ import be.acq.pojo.Membre;
 import be.acq.pojo.Vehicule;
 
 public class M_Membre {
-	public Membre m;
+	private Membre m;
 	public M_Membre(Membre m) {
 		this.m = m;
 	}
@@ -28,7 +28,6 @@ public class M_Membre {
 		int choix;
 		do {
 			System.out.println("**MENU MEMBRE**");
-			System.out.println("Que voulez-vous faire?");
 			System.out.println("1. Proposer ses disponibilités");
 			System.out.println("2. Réserver une place");
 			System.out.println("3. S'inscrire a une nouvelle catégorie");

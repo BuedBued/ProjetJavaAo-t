@@ -7,7 +7,7 @@ import be.acq.pojo.Balade;
 import be.acq.pojo.Responsable;
 
 public class M_Responsable {
-	public Responsable r;
+	private Responsable r;
 	public M_Responsable(Responsable r) {
 		this.r = r;
 	}
@@ -16,7 +16,6 @@ public class M_Responsable {
 		int choix;
 		do {
 			System.out.println("**MENU RESPONSABLE**");
-			System.out.println("Que voulez-vous faire?");
 			System.out.println("1. Ajouter une balade");
 			System.out.println("0. Quitter");
 			System.out.print("Votre choix : ");
@@ -27,15 +26,15 @@ public class M_Responsable {
 				choix = Clavier.lireInt();
 			}
 			switch(choix) {
-				case 1:
-					if(createBalade())
-						System.out.println("Balade ajoutée avec succès");
-					else
-						System.out.println("L'ajout de la balade a échoué");
-					break;
-				case 0:
-					//Retour à la classe M_Personne
-					break;
+			case 1:
+				if(createBalade())
+					System.out.println("Balade ajoutée avec succès");
+				else
+					System.out.println("L'ajout de la balade a échoué");
+				break;
+			case 0:
+				//Retour à la classe M_Personne
+				break;
 			}
 		}
 		while(choix!=0);
