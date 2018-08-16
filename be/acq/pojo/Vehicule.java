@@ -59,4 +59,8 @@ public class Vehicule implements Serializable{
 	public boolean removeCategorie(Membre m) {
 		return listPassager.remove(m);
 	}
+	
+	public String display() {
+		return conducteur.getPrenom() + " " +conducteur.getNom() + ". Place disponible : " + (nbrPlaceMax-nbrPlaceActuel);
+	}
 }

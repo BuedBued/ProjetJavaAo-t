@@ -2,11 +2,14 @@ package be.acq.metier;
 
 import be.acq.clavier.Clavier;
 import be.acq.dao.DAO_Balade;
+import be.acq.dao.DAO_Membre;
+import be.acq.dao.DAO_Vehicule;
 import be.acq.dao.DBConnection;
 import be.acq.pojo.Balade;
 import be.acq.pojo.Calendrier;
 import be.acq.pojo.Categorie;
 import be.acq.pojo.Membre;
+import be.acq.pojo.Vehicule;
 
 public class M_Membre {
 	public Membre m;
@@ -21,7 +24,8 @@ public class M_Membre {
 			System.out.println("Que voulez-vous faire?");
 			System.out.println("1. Proposer ses disponibilités");
 			System.out.println("2. Réserver une place");
-			System.out.println("3. Executer les payements");
+			System.out.println("3. S'inscrire a une nouvelle catégorie");
+			System.out.println("4. Executer les payements");
 			System.out.println("0. Quitter");
 			System.out.print("Votre choix : ");
 			choix = Clavier.lireInt();
@@ -35,6 +39,7 @@ public class M_Membre {
 				proposerDisponibilite();
 				break;
 			case 2:
+				reserverPlace();
 				break;
 			case 0:
 				//Retour à la classe M_Personne
@@ -43,10 +48,75 @@ public class M_Membre {
 		}
 		while(choix != 0);
 	}
-
+	
+	//CHOIX 1 : PROPOSER UNE DISPONIBILITE
 	public void proposerDisponibilite() {
 		System.out.println("**PROPOSER DISPONIBILITE**");
-		System.out.println("Choisissez la categorie");
+		Categorie c = choisirCategorie();
+		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
+		c.setCalendrier(daoB.selectList(c));
+		if(c.getCalendrier().getListBalade().size()!=0) {
+			if(creerCovoiturage(c.getCalendrier()))
+				System.out.println("Votre véhicule est enregistré pour cette balade");
+			else
+				System.out.println("Une erreur est survenue, votre véhicule n'a pas été enregistré");
+			}
+		else
+			System.out.println("Pas de balade disponible");
+	}
+	
+	public boolean creerCovoiturage(Calendrier cal) {
+		Balade b = choisirBalade(cal);
+		System.out.print("Nombre de places disponibles dans votre véhicule : ");
+		int maxPlace = Clavier.lireInt();
+		while(maxPlace<1) {
+			System.out.println("Le nombre de places maximal doit être positif");
+			System.out.print("Nombre de places disponibles dans votre véhicule : ");
+			maxPlace = Clavier.lireInt();
+		}
+		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
+		return daoB.createCovoiturage(b.getIDBalade(), m, maxPlace);
+	}
+	
+	//CHOIX 2 : RESERVER UNE PLACE
+	public void reserverPlace() {
+		System.out.println("**RESERVER UNE PLACE**");
+		Categorie c = choisirCategorie();
+		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
+		c.setCalendrier(daoB.selectList(c));
+		if(c.getCalendrier().getListBalade().size()!=0) {
+			if(reserverCovoiturage(c.getCalendrier()))
+				System.out.println("Votre place est réservée");
+			else
+				System.out.println("Une erreur est survenue, votre place n'a pas été enregistrée");
+			}
+		else
+			System.out.println("Pas de balade disponible");
+		
+	}
+	
+	public boolean reserverCovoiturage(Calendrier cal) {
+		Balade b = choisirBalade(cal);
+		DAO_Vehicule daoV = new DAO_Vehicule(DBConnection.getInstance());
+		b.setListCovoiturage(daoV.selectCovoiturages(b.getIDBalade()));
+		Vehicule v = choisirCovoit(b);
+		//Ajout du passager dans la base de données
+		boolean etape1 = daoV.ajouterPassager(v, m.getIDMembre());
+		boolean etape2 = false;
+		//Ajout du forfait au membre
+		if(etape1) {
+			m.setSolde(m.getSolde()+b.getForfait());
+			DAO_Membre daoM = new DAO_Membre(DBConnection.getInstance());
+			etape2 = daoM.update(m);
+		}
+		return etape1 && etape2;
+	}
+	
+	//CHOIX 3 : PAYER SON DU
+	
+	//Méthodes des choix
+	public Categorie choisirCategorie() {
+		System.out.println("Choisissez la catégorie");
 		int i = 1;
 		for(Categorie c : m.getListCategorie()) {
 			System.out.println(i + ". " + c.getLibelle());
@@ -60,19 +130,10 @@ public class M_Membre {
 			choix = Clavier.lireInt();
 		}
 		Categorie c = m.getListCategorie().get(choix-1);
-		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
-		c.setCalendrier(daoB.selectList(c));
-		if(c.getCalendrier().getListBalade().size()!=0) {
-			if(creerCovoiturage(c.getCalendrier()))
-				System.out.println("Votre vehicule est enregistre pour cette balade");
-			else
-				System.out.println("Une erreur est survenue, votre vehicule n'a pas ete enregistre");
-			}
-		else
-			System.out.println("Pas de balade disponible");
+		return c;
 	}
 	
-	public boolean creerCovoiturage(Calendrier cal) {
+	public Balade choisirBalade(Calendrier cal) {
 		System.out.println("**CHOISIR BALADE**");
 		System.out.println("Choisissez une balade");
 		int i = 1;
@@ -88,15 +149,31 @@ public class M_Membre {
 			System.out.print("Votre choix : ");
 			choix = Clavier.lireInt();
 		}
-		System.out.print("Nombre de places disponibles dans votre vehicule : ");
-		int maxPlace = Clavier.lireInt();
-		while(maxPlace<1) {
-			System.out.println("Le nombre de places maximal doit être positif");
-			System.out.print("Nombre de places disponibles dans votre vehicule : ");
-			maxPlace = Clavier.lireInt();
-		}
 		Balade b = cal.getListBalade().get(choix-1);
-		DAO_Balade daoB = new DAO_Balade(DBConnection.getInstance());
-		return daoB.createCovoiturage(b.getIDBalade(), m, maxPlace);
+		return b;
+	}
+	
+	public Vehicule choisirCovoit(Balade b) {
+		int i = 1;
+		System.out.println("Choisissez votre véhicule");
+		for(Vehicule covoit : b.getListCovoiturage()) {
+			System.out.println(i + ". " + covoit.display());
+			i++;
+		}
+		Vehicule v;
+		do {
+			System.out.print("Votre choix : ");
+			int choix = Clavier.lireInt();
+			while(choix>i) {
+				System.out.println("Choix non valide");
+				System.out.print("Votre choix : ");
+				choix = Clavier.lireInt();
+			}
+			v = b.getListCovoiturage().get(choix-1);
+			if(v.getNbrPlaceActuel()==0)
+				System.out.println("Il n'y a plus de place pour ce covoiturage-ci. Veuillez en choisir un nouveau");
+		}
+		while(v.getNbrPlaceActuel()==0);
+		return v;
 	}
 }

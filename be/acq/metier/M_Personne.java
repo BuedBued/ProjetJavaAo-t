@@ -62,13 +62,13 @@ public class M_Personne {
 			}
 			else if(p.getClass().equals(Tresorier.class)) {
 				//Action Tresorier
-				System.out.println("Debug Tresorier");
+				System.out.println("Debug Trésorier");
 			}
 			else
-				System.out.println("Connexion echouee");
+				System.out.println("Connexion échouée");
 		}
 		else {
-			System.out.println("Connexion echouee");
+			System.out.println("Connexion échouée");
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class M_Personne {
 				mM.menuMembre();
 			}
 			else {
-				System.out.println("Votre inscription a echouee");
+				System.out.println("Votre inscription a échouée");
 			}
 		}
 		else {
@@ -104,18 +104,18 @@ public class M_Personne {
 			System.out.print("Veuillez saisir votre nom : ");
 			nom = Clavier.lireString();
 		}
-		System.out.print("Veuillez saisir votre prenom : ");
+		System.out.print("Veuillez saisir votre prénom : ");
 		String prenom = Clavier.lireString();
 		while(prenom.length() < 2) {
 			System.out.println("Prenom incorrect : il fait moins de 2 lettres");
-			System.out.print("Veuillez saisir votre prenom : ");
+			System.out.print("Veuillez saisir votre prénom : ");
 			prenom = Clavier.lireString();
 		}
-		System.out.print("Veuillez saisir votre numero de telephone (format : 000/000000) : ");
+		System.out.print("Veuillez saisir votre numero de téléphone (format : 000/000000) : ");
 		String tel = Clavier.lireString();
 		while(tel.charAt(3)!='/') {
 			System.out.println("Format non correct");
-			System.out.print("Veuillez saisir votre numero de telephone (format : 000/000000) : ");
+			System.out.print("Veuillez saisir votre numero de téléphone (format : 000/000000) : ");
 			tel = Clavier.lireString();
 		}
 		System.out.print("Veuillez saisir votre adresse mail : ");
@@ -144,7 +144,7 @@ public class M_Personne {
 	//Choix de la catégorie pour les Responsables et les membres (à l'inscription)
 	public Categorie choixCategorie() {
 		Categorie c = null;
-		System.out.println("**Choix de votre categorie**");
+		System.out.println("**Choix de votre catégorie**");
 		System.out.println("1. Cyclo");
 		System.out.println("2. Randonneur");
 		System.out.println("3. Trialiste");
